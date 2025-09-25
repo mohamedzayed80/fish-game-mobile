@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fishi - Amazing & Wonderful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d0ebd0 100%);
+            color: #2d5016;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #1a2f0d 0%, #2d5016 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .animated-title {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+            animation: titleFloat 4s ease-in-out infinite;
+        }
+        
+        .title-gradient {
+            background: linear-gradient(45deg, 
+                #1a2f0d, #2d5016, #4a7a29, #6ba641, 
+                #8bc34a, #6ba641, #4a7a29, #2d5016, #1a2f0d);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 8s ease infinite, letterGlow 2s ease-in-out infinite alternate;
+        }
+        
+        .title-shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                #1a2f0d, #2d5016, #4a7a29, #6ba641, 
+                #8bc34a, #6ba641, #4a7a29, #2d5016, #1a2f0d);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.7;
+            animation: gradientShift 8s ease infinite, shadowPulse 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+        
+        @keyframes letterGlow {
+            0% { text-shadow: 0 0 5px rgba(139, 195, 74, 0.5), 0 0 10px rgba(139, 195, 74, 0.3); }
+            100% { text-shadow: 0 0 15px rgba(139, 195, 74, 0.8), 0 0 25px rgba(139, 195, 74, 0.5); }
+        }
+        
+        @keyframes shadowPulse {
+            0% { transform: translateY(0) scale(1); opacity: 0.5; }
+            100% { transform: translateY(5px) scale(1.05); opacity: 0.8; }
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5rem;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .qualities {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .quality-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .quality-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .quality-card i {
+            font-size: 2.5rem;
+            color: #2d5016;
+            margin-bottom: 1rem;
+        }
+        
+        .game-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .game-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #1a2f0d;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .game-board {
+            width: 300px;
+            height: 400px;
+            background: #f0f8f0;
+            border: 3px solid #2d5016;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            touch-action: none; /* Prevent scrolling while playing */
+        }
+        
+        .fashion-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+        
+        .basket {
+            position: absolute;
+            bottom: 10px;
+            width: 80px;
+            height: 40px;
+            background: #1a2f0d;
+            border-radius: 5px;
+            transition: left 0.1s linear;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        button {
+            background: #2d5016;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            font-size: 1rem;
+            min-height: 44px; /* Better touch target */
+        }
+        
+        button:hover {
+            background: #1a2f0d;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .message-box {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f0f8f0;
+            border-radius: 10px;
+            font-style: italic;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1a2f0d;
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        .fashion-showcase {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fashion-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .fashion-icon {
+            font-size: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .fashion-icon span {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #1a2f0d;
+        }
+        
+        /* Touch controls for mobile */
+        .touch-controls {
+            display: none;
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .touch-btn {
+            width: 80px;
+            height: 80px;
+            background: rgba(45, 80, 22, 0.7);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        @media (max-width: 768px) {
+            .animated-title {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .quality-card {
+                width: 100%;
+            }
+            
+            .fashion-icons {
+                gap: 1rem;
+            }
+            
+            .fashion-icon {
+                font-size: 2.5rem;
+            }
+            
+            .game-board {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            /* Show touch controls on mobile */
+            .touch-controls {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating-hearts" id="hearts-container"></div>
+        <div class="header-content">
+            <h1 class="animated-title">
+                <span class="title-shadow">Fishi</span>
+                <span class="title-gradient">Fish</span>
+            </h1>
+            <div class="tagline">Absolutely Amazing & Incredibly Wonderful</div>
+            <p>This page is dedicated to celebrating the wonderful person you are!</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+           <p>Fishi, you brighten every room you enter with your light and delighful soul and pretty style (you onlyu wear shades of green and black but anyway) prettiest in the room always</p>
+            <p>Everyone who knows you is incredibly proud of the person you are and all that you've accomplished and will achieve (iam ur biggest admirer and supporter)</p>
+        </section>
+        
+        <section class="qualities">
+            <div class="quality-card">
+                <i>💚</i>
+                <h3>green ass</h3>
+                <p>you are the best thing ever, ur the best daughter, best sister, best friend, best lover, ur the best anyone can dream of having</p>
+            </div>
+            <div class="quality-card">
+                <i>✨</i>
+                <h3>jewish </h3>
+                <p>your propganda too strong im falling for it harder and harder 💔💔 iam under mind control pls help</p>
+            </div>
+            <div class="quality-card">
+                <i>🌟</i>
+                <h3>bangali indian </h3>
+                <p> ur a cousin of indians, why would u do this to me 💔💔💔</p>
+            </div>
+        </section>
+        
+        <section class="fashion-showcase">
+            <h2>fishi's Fashion Favorites</h2>
+            <div class="fashion-icons">
+                <div class="fashion-icon">
+                    👗<span>Dresses</span>
+                </div>
+                <div class="fashion-icon">
+                    👠<span>Shoes</span>
+                </div>
+                <div class="fashion-icon">
+                    👜<span>Bags</span>
+                </div>
+                <div class="fashion-icon">
+                    👒<span>Hats</span>
+                </div>
+                <div class="fashion-icon">
+                    💍<span>Accessories</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="game-section">
+            <h2 class="game-title">fish's Fashion Collector</h2>
+            <div class="game-container">
+                <div class="game-board" id="game-board">
+                    <div class="basket" id="basket"></div>
+                </div>
+                
+                <!-- Touch controls for mobile -->
+                <div class="touch-controls">
+                    <div class="touch-btn" id="left-btn">←</div>
+                    <div class="touch-btn" id="right-btn">→</div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="start-btn">Start Game</button>
+                    <button id="reset-btn">Reset Game</button>
+                </div>
+                <div class="game-stats">
+                    <div>Score: <span id="score">0</span></div>
+                    <div>Time: <span id="time">60</span>s</div>
+                </div>
+            </div>
+            <div class="message-box" id="message">
+                Click Start to begin collecting fashion items for fish!
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+         <p>Created with 💚 for the amazing fishi</p>
+        <p>You're loved and appreciated more than you  will ever know</p>
+        i love you so much
+    </footer>
+
+    <script>
+        // Create floating hearts
+        const heartsContainer = document.getElementById('hearts-container');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💚';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+            heartsContainer.appendChild(heart);
+        }
+        
+        // Game variables
+        let score = 0;
+        let timeLeft = 60;
+        let gameInterval;
+        let itemInterval;
+        let gameActive = false;
+        let touchInterval = null;
+        
+        const gameBoard = document.getElementById('game-board');
+        const basket = document.getElementById('basket');
+        const scoreDisplay = document.getElementById('score');
+        const timeDisplay = document.getElementById('time');
+        const messageDisplay = document.getElementById('message');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const leftBtn = document.getElementById('left-btn');
+        const rightBtn = document.getElementById('right-btn');
+        
+        // Basket movement - mouse controls for desktop
+        document.addEventListener('mousemove', (e) => {
+            if (!gameActive) return;
+            
+            const gameRect = gameBoard.getBoundingClientRect();
+            let basketX = e.clientX - gameRect.left - basket.offsetWidth / 2;
+            
+            // Keep basket within game bounds
+            if (basketX < 0) basketX = 0;
+            if (basketX > gameBoard.offsetWidth - basket.offsetWidth) {
+                basketX = gameBoard.offsetWidth - basket.offsetWidth;
+            }
+            
+            basket.style.left = basketX + 'px';
+        });
+        
+        // Touch controls for mobile
+        gameBoard.addEventListener('touchmove', (e) => {
+            if (!gameActive) return;
+            
+            e.preventDefault(); // Prevent scrolling
+            const touch = e.touches[0];
+            const gameRect = gameBoard.getBoundingClientRect();
+            let basketX = touch.clientX - gameRect.left - basket.offsetWidth / 2;
+            
+            // Keep basket within game bounds
+            if (basketX < 0) basketX = 0;
+            if (basketX > gameBoard.offsetWidth - basket.offsetWidth) {
+                basketX = gameBoard.offsetWidth - basket.offsetWidth;
+            }
+            
+            basket.style.left = basketX + 'px';
+        }, { passive: false });
+        
+        // Touch controls for left and right buttons
+        function startMoving(direction) {
+            if (!gameActive || touchInterval) return;
+            
+            touchInterval = setInterval(() => {
+                const currentLeft = parseInt(basket.style.left) || 0;
+                let newLeft = currentLeft + (direction === 'right' ? 10 : -10);
+                
+                // Keep basket within game bounds
+                if (newLeft < 0) newLeft = 0;
+                if (newLeft > gameBoard.offsetWidth - basket.offsetWidth) {
+                    newLeft = gameBoard.offsetWidth - basket.offsetWidth;
+                }
+                
+                basket.style.left = newLeft + 'px';
+            }, 16); // ~60fps
+        }
+        
+        function stopMoving() {
+            if (touchInterval) {
+                clearInterval(touchInterval);
+                touchInterval = null;
+            }
+        }
+        
+        // Button touch events
+        leftBtn.addEventListener('touchstart', () => startMoving('left'));
+        leftBtn.addEventListener('touchend', stopMoving);
+        leftBtn.addEventListener('touchcancel', stopMoving);
+        
+        rightBtn.addEventListener('touchstart', () => startMoving('right'));
+        rightBtn.addEventListener('touchend', stopMoving);
+        rightBtn.addEventListener('touchcancel', stopMoving);
+        
+        // Mouse events for buttons (for devices that support both)
+        leftBtn.addEventListener('mousedown', () => startMoving('left'));
+        leftBtn.addEventListener('mouseup', stopMoving);
+        leftBtn.addEventListener('mouseleave', stopMoving);
+        
+        rightBtn.addEventListener('mousedown', () => startMoving('right'));
+        rightBtn.addEventListener('mouseup', stopMoving);
+        rightBtn.addEventListener('mouseleave', stopMoving);
+        
+        // Fashion items (emojis representing green and black fashion items)
+        const fashionItems = ['👗', '👠', '👜', '👒', '💍', '👑'];
+        const colors = ['#2d5016', '#1a2f0d', '#000000', '#4a7a29', '#3a6320'];
+        
+        // Create falling items
+        function createFallingItem() {
+            if (!gameActive) return;
+            
+            const item = document.createElement('div');
+            item.classList.add('fashion-item');
+            item.innerHTML = fashionItems[Math.floor(Math.random() * fashionItems.length)];
+            item.style.color = colors[Math.floor(Math.random() * colors.length)];
+            item.style.fontSize = '2rem';
+            item.style.textAlign = 'center';
+            item.style.lineHeight = '50px';
+            
+            const xPos = Math.random() * (gameBoard.offsetWidth - 50);
+            item.style.left = xPos + 'px';
+            item.style.top = '-50px';
+            
+            gameBoard.appendChild(item);
+            
+            // Animation
+            let yPos = -50;
+            const fallSpeed = 2 + Math.random() * 2;
+            
+            const fallInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(fallInterval);
+                    return;
+                }
+                
+                yPos += fallSpeed;
+                item.style.top = yPos + 'px';
+                
+                // Check if item is caught
+                const basketRect = basket.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                
+                if (yPos > gameBoard.offsetHeight - 100) {
+                    if (itemRect.left < basketRect.right && 
+                        itemRect.right > basketRect.left && 
+                        itemRect.bottom > basketRect.top) {
+                        
+                        // Item caught!
+                        score += 10;
+                        scoreDisplay.textContent = score;
+                        messageDisplay.textContent = "Great catch! fish would love this " + 
+                            (item.innerHTML === '👗' ? 'dress!' : 
+                             item.innerHTML === '👠' ? 'shoe!' :
+                             item.innerHTML === '👜' ? 'bag!' :
+                             item.innerHTML === '👒' ? 'hat!' :
+                             item.innerHTML === '💍' ? 'ring!' : 'crown!');
+                        
+                        clearInterval(fallInterval);
+                        gameBoard.removeChild(item);
+                    }
+                }
+                
+                // Remove if out of bounds
+                if (yPos > gameBoard.offsetHeight) {
+                    clearInterval(fallInterval);
+                    if (gameBoard.contains(item)) {
+                        gameBoard.removeChild(item);
+                    }
+                }
+            }, 20);
+        }
+        
+        // Start game
+        startBtn.addEventListener('click', () => {
+            if (gameActive) return;
+            
+            gameActive = true;
+            score = 0;
+            timeLeft = 60;
+            scoreDisplay.textContent = score;
+            timeDisplay.textContent = timeLeft;
+            messageDisplay.textContent = "Catch the falling fashion items for fish!";
+            
+            // Clear any existing items
+            const existingItems = document.querySelectorAll('.fashion-item');
+            existingItems.forEach(item => item.remove());
+            
+            // Start timers
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                timeDisplay.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            itemInterval = setInterval(createFallingItem, 800);
+        });
+        
+        // Reset game
+        resetBtn.addEventListener('click', () => {
+            endGame();
+            score = 0;
+            timeLeft = 60;
+            scoreDisplay.textContent = score;
+            timeDisplay.textContent = timeLeft;
+            messageDisplay.textContent = "Click Start to begin collecting fashion items for fish!";
+        });
+        
+        // End game
+        function endGame() {
+            gameActive = false;
+            clearInterval(gameInterval);
+            clearInterval(itemInterval);
+            
+            // Stop any movement
+            stopMoving();
+            
+            // Clear any existing items
+            const existingItems = document.querySelectorAll('.fashion-item');
+            existingItems.forEach(item => item.remove());
+            
+            if (timeLeft <= 0) {
+                let message = "Time's up! ";
+                if (score >= 200) {
+                    message += "Amazing! fish would be thrilled with your fashion collection!";
+                } else if (score >= 100) {
+                    message += "Great job! You collected some lovely pieces for fish!";
+                } else {
+                    message += "Nice try! fish appreciates your effort!";
+                }
+                messageDisplay.textContent = message;
+            }
+        }
+    </script>
+</body>
+</html>
